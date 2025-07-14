@@ -46,14 +46,22 @@
 
 
 
-import React from "react";
-import Onboarding from "./Pages/Onboard";
+// src/App.tsx
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Onboarding from './Pages/Onboard';
+import Welcome from './Pages/Welcome';
+import Login from './Pages/Login';
+import Signup from './Pages/Signup';
 
-const App: React.FC = () => {
+const App = () => {
   return (
-    <div className="App">
-      <Onboarding />
-    </div>
+    <Routes>
+      <Route path="/" element={<Onboarding />} />
+      <Route path="/welcome" element={<Welcome />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+    </Routes>
   );
 };
 

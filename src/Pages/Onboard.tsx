@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './Onboard.css';
+import { useNavigate } from 'react-router-dom'; // ✅
+
 
 import Img1 from '/1.png';
 import Img2 from '/2.png';
@@ -30,6 +32,7 @@ const slides = [
 ];
 
 const Onboarding = () => {
+  const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
 
   const nextSlide = () => {
@@ -54,9 +57,9 @@ const Onboarding = () => {
               <h1>{slide.title}</h1>
               <p>{slide.desc}</p>
               {current === slides.length - 1 && (
-                <button className="get-started" onClick={alert.bind(null, 'Get Started!')}>
-                  Get Started
-                </button>
+                <button className="get-started" onClick={() => navigate('/welcome')}>
+      Get Started
+    </button>
               )}
             </div>
           </div>
