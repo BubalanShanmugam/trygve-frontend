@@ -7,6 +7,7 @@ const slides = [
     title: "Your Health, Our Priority",
     desc: "Trusted doctors and care at your doorstep.",
   },
+  
   {
     image: "/2.png",
     title: "Seamless Care, Delivered",
