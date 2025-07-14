@@ -9,23 +9,23 @@ import Img4 from '/4.png';
 const slides = [
   {
     image: Img1,
-    title: '"Trygve"',
-    desc: '"Trusted Guardian of Life"',
+    title: 'Trygve',
+    desc: 'Trusted Guardian of Life',
   },
   {
     image: Img2,
-    title: '"Your Health, Our Priority"',
-    desc: '"Trusted doctors and care at your doorstep."',
+    title: 'Your Health, Our Priority',
+    desc: 'Trusted doctors and care at your doorstep',
   },
   {
     image: Img3,
-    title: '"Seamless Care, Delivered"',
-    desc: '"Consult, treat, and heal — hassle-free."',
+    title: 'Seamless Care, Delivered',
+    desc: 'Consult, treat, and heal — hassle-free',
   },
   {
     image: Img4,
-    title: '"Affordable Healthcare for Everyone"',
-    desc: '"Quality care for every budget."',
+    title: 'Affordable Healthcare for Everyone',
+    desc: 'Quality care for every budget',
   },
 ];
 
