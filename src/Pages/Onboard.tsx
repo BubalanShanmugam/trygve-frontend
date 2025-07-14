@@ -1,55 +1,63 @@
-import { useState } from "react";
+import React, { useState } from 'react';
 import './Onboard.css';
+
+import Img1 from '/1.png';
+import Img2 from '/2.png';
+import Img3 from '/3.png';
+import Img4 from '/4.png';
 
 const slides = [
   {
-    image: "/1.png",
-    title: "Your Health, Our Priority",
-    desc: "Trusted doctors and care at your doorstep.",
-  },
-  
-  {
-    image: "/2.png",
-    title: "Seamless Care, Delivered",
-    desc: "Consult, treat, and heal—hassle-free.",
+    image: Img1,
+    title: '"Trygve"',
+    desc: '"Trusted Guardian of Life"',
   },
   {
-    image: "/3.png",
-    title: "Affordable Healthcare For Everyone",
-    desc: "Quality care for every budget.",
+    image: Img2,
+    title: '"Your Health, Our Priority"',
+    desc: '"Trusted doctors and care at your doorstep."',
   },
   {
-    image: "/4.png",
-    title: "Trygve",
-    desc: "Trusted Guardian of Life",
+    image: Img3,
+    title: '"Seamless Care, Delivered"',
+    desc: '"Consult, treat, and heal — hassle-free."',
+  },
+  {
+    image: Img4,
+    title: '"Affordable Healthcare for Everyone"',
+    desc: '"Quality care for every budget."',
   },
 ];
 
 const Onboarding = () => {
   const [current, setCurrent] = useState(0);
 
-  const handleNext = () => {
-    if (current < slides.length - 1) {
-      setCurrent(current + 1);
-    }
+  const nextSlide = () => {
+    if (current < slides.length - 1) setCurrent(current + 1);
   };
 
-  const handleSkip = () => {
-    setCurrent(slides.length - 1);
-  };
+  const skipSlide = () => setCurrent(slides.length - 1);
 
   return (
     <div className="onboarding-container">
-      <div
-        className="slider"
-        style={{ transform: `translateX(-${current * 100}%)` }}
-      >
+      <div className="slider" style={{ transform: `translateX(-${current * 100}%)` }}>
         {slides.map((slide, index) => (
-          <div key={index} className="slide">
-            <img src={slide.image} alt={`slide-${index}`} />
-            <div className="overlay">
+          <div className="slide" key={index}>
+            {/* ✅ Image */}
+            <img src={slide.image} alt={`slide-${index}`} className="background-image" />
+
+            {/* ✅ Bluish overlay */}
+            <div className="overlay"></div>
+
+            {/* ✅ Centered content */}
+            <div className="content">
               <h1>{slide.title}</h1>
               <p>{slide.desc}</p>
+              {current === slides.length - 1 && (
+                <button className="get-started" onClick={alert.bind(null, 'Get Started!')}>
+                  Get Started
+                </button>
+              )}
             </div>
           </div>
         ))}
@@ -57,22 +65,24 @@ const Onboarding = () => {
 
       <div className="controls">
         <div className="dots">
-          {slides.map((_, idx) => (
-            <span
-              key={idx}
-              className={`dot ${current === idx ? "active" : ""}`}
-              onClick={() => setCurrent(idx)}
+          {slides.map((_, i) => (
+            <div
+              key={i}
+              className={`dot ${i === current ? 'active' : ''}`}
+              onClick={() => setCurrent(i)}
             />
           ))}
         </div>
-        <div className="buttons">
-          {current < slides.length - 1 ? (
+        <div className={`buttons${current === slides.length - 1 ? ' center' : ''}`}>
+          { current !== slides.length - 1 && (
             <>
-              <button onClick={handleSkip}>Skip</button>
-              <button onClick={handleNext}>Next →</button>
+              <button className="link-btn" onClick={skipSlide}>
+                Skip
+              </button>
+              <button className="link-btn" onClick={nextSlide}>
+                Next &rarr;
+              </button>
             </>
-          ) : (
-            <button className="get-started">Get Started</button>
           )}
         </div>
       </div>

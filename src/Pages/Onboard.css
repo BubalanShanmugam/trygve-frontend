@@ -86,62 +86,81 @@
   font-weight: bold;
 } */
 
-
-
-
-
-
-
-
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
 .onboarding-container {
-  width: 100%;
   height: 100vh;
+  width: 100%;
   overflow: hidden;
   position: relative;
-  background-color: #0a2d52; /* Bluish background */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif,Audiowide;
 }
 
 .slider {
   display: flex;
-  width: 400%;
   height: 100%;
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.6s ease-in-out;
 }
 
 .slide {
   min-width: 100%;
   height: 100%;
-  background-size: cover;
-  background-position: center;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.overlay {
-  background-color: rgba(10, 45, 82, 0.6); /* bluish overlay */
+/* ✅ Background image */
+.background-image {
   position: absolute;
   width: 100%;
   height: 100%;
-  padding: 20px 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  color: white;
-  text-shadow: 1px 1px 4px #000;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+  z-index: 0;
 }
 
-.overlay h1 {
-  font-size: 2.2rem;
+/* ✅ Bluish overlay */
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(21, 99, 201, 0.826); /* true blue tint */
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* ✅ Text centered and above overlay */
+.content {
+  position: relative;
+  z-index: 2;
+  color: white;
+  text-align: center;
+  max-width: 700px;
+  padding: 0 20px;
+}
+
+.content h1 {
+  font-family: 'Audiowide', cursive;
+  font-size: 3.5rem;
+  font-weight: bold;
   margin-bottom: 0.5rem;
 }
 
-.overlay p {
+.content p {
   font-size: 1.2rem;
+  opacity: 0.7;
 }
 
+/* Controls */
 .controls {
   position: absolute;
-  bottom: 30px;
+  bottom: 40px;
   width: 100%;
+  text-align: center;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -149,53 +168,87 @@
 
 .dots {
   display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
 }
-
 
 .dot {
   width: 10px;
   height: 10px;
+  background-color: #ffffff88;
   border-radius: 50%;
-  background-color: white;
-  opacity: 0.4;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 .dot.active {
-  opacity: 1;
-  background-color: #1e90ff;
+  background-color: #ffffff;
 }
 
+/* Link-style buttons */
+.link-btn {
+  background: none;
+  border: none;
+  color: #fff; /* White color */
+  font-size: 1.1rem;
+  text-decoration: none; /* Remove underline */
+  cursor: pointer;
+  padding: 0 12px;
+  transition: color 0.2s;
+}
+
+.link-btn:hover {
+  color: #e0e0e0; /* Slightly lighter on hover */
+  text-decoration: none; /* Ensure no underline on hover */
+}
+
+/* Position left and move right button towards center */
 .buttons {
   display: flex;
-  gap: 16px;
+  width: 100%;
+  padding: 0 24px;
+}
+
+.buttons.center {
+  justify-content: center;
+}
+
+.buttons .link-btn:last-child {
+  margin-left: auto;
+  margin-right: 40px; /* Move Next button to the far right */
 }
 
 button {
-  padding: 10px 20px;
-  border-radius: 6px;
+  background-color: #1e90ff;
+  color: white;
   border: none;
-  cursor: pointer;
-  font-weight: bold;
+  padding: 10px 25px;
   font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
   transition: 0.3s ease;
 }
 
-.skip {
-  background-color: white;
-  color: #0a2d52;
-}
-
-.next {
-  background-color: #1e90ff;
-  color: white;
+button:hover {
+  /* background-color: #0d6efd; */
 }
 
 .get-started {
-  background-color: #007bff;
-  color: white;
-  padding: 12px 30px;
+  background-color: #2f43f7;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1.2rem;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 10px 32px;
+  margin: 24px auto 0 auto; /* space above, center horizontally */
+  display: block;
+  transition: color 0.2s, background 0.2s;
+}
+
+.get-started:hover {
+  color: #e0e0e0;
+  background-color: #1a2bb8;
 }
