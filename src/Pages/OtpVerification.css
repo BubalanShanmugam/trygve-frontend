@@ -136,7 +136,7 @@ h2 {
 .otp-inputs {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 10px
 }
 
 .otp-inputs input {

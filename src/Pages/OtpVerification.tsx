@@ -130,6 +130,7 @@ const OtpVerification = () => {
         <p className="resend-text">Didn’t receive code? <span>Resend</span></p>
 
         <div className="logo">
+          
           <img src="/Bglogo.png" alt="Logo" />
         </div>
 
