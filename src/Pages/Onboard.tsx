@@ -58,8 +58,8 @@ const Onboarding = () => {
               <p>{slide.desc}</p>
               {current === slides.length - 1 && (
                 <button className="get-started" onClick={() => navigate('/welcome')}>
-      Get Started
-    </button>
+                  Get Started
+                </button>
               )}
             </div>
           </div>

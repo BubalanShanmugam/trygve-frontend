@@ -15,6 +15,9 @@ const Welcome = () => {
       <div className="content">
         <h2 className='greet'>Welcome to</h2>
         <h1 className="brand">trygve</h1>
+        <div className="logo-b">
+        <img src="/Bglogo.png" />
+      </div>
         <p className="tagline">
           Your trusted partner for personalized healthcare, right at your doorstep
         </p>
