@@ -1,143 +1,110 @@
-// import React, { useState } from 'react';
-// import './OtpVerification.css';
-// import { useNavigate } from 'react-router-dom';
-
-// const OtpVerification = () => {
-//   const [otp, setOtp] = useState(Array(6).fill(""));
-//   const navigate = useNavigate();
-
-//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-//     const value = e.target.value.replace(/\D/, ''); // Allow only digits
-//     if (!value) return;
-    
-//     const newOtp = [...otp];
-//     newOtp[index] = value;
-//     setOtp(newOtp);
-
-//     const next = document.getElementById(`otp-${index + 1}`);
-//     if (next) (next as HTMLElement).focus();
-//   };
-
-//   const handleVerify = () => {
-//     const fullOtp = otp.join('');
-//     console.log("Verifying OTP:", fullOtp);
-//     // TODO: Send to backend for verification
-//   };
-
-//   return (
-//     <div className="otp-container">
-//       <div className="back-arrow" onClick={() => navigate(-1)}>←</div>
-//       <h2>OTP Verification</h2>
-//       <p className="description">Enter the verification code we just sent to your number +91 7******55.</p>
-
-//       <div className="otp-inputs">
-//         {otp.map((digit, i) => (
-//           <input
-//             key={i}
-//             id={`otp-${i}`}
-//             type="text"
-//             maxLength={1}
-//             value={digit}
-//             onChange={(e) => handleChange(e, i)}
-//           />
-//         ))}
-//       </div>
-
-//       <p className="resend-text">
-//         Didn’t receive code? <span className="resend-link">Resend</span>
-//       </p>
-
-//       <div className="logo-bg">
-//         <img src="/Bglogo.png" alt="Logo" />
-//       </div>
-
-//       <button className="verify-btn" onClick={handleVerify}>Verify</button>
-//     </div>
-//   );
-// };
-
-// export default OtpVerification;
-
-
-
-
-
-
-
-
-
-
-
-import React, { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './OtpVerification.css';
 
 const OtpVerification = () => {
-  const [otp, setOtp] = useState(Array(6).fill(""));
-  const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
   const navigate = useNavigate();
+  const location = useLocation();
+  // Get phone from navigation state, fallback to empty string if not present
+  const phone = location.state?.phone || "";
 
-  const handleChange = (value: string, idx: number) => {
-    if (/^\d?$/.test(value)) {
-      const newOtp = [...otp];
-      newOtp[idx] = value;
-      setOtp(newOtp);
-      if (value && idx < otp.length - 1) {
-        inputsRef.current[idx + 1]?.focus();
+  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+
+  const handleChange = (index: number, value: string) => {
+    if (/^[0-9]?$/.test(value)) {
+      const updatedOtp = [...otp];
+      updatedOtp[index] = value;
+      setOtp(updatedOtp);
+
+      if (value && index < 5) {
+        const nextInput = document.getElementById(`otp-${index + 1}`);
+        if (nextInput) (nextInput as HTMLInputElement).focus();
       }
     }
   };
 
   const handleVerify = () => {
-    const fullOtp = otp.join('');
-    console.log("Verifying OTP:", fullOtp);
-    // TODO: Send to backend for verification
+    if (otp.join('').length === 6) {
+      navigate('/UserDetails', { state: { phone, otp: otp.join('') } });
+      // Navigate to the next page
+    } else {
+      alert('Enter the full 6-digit OTP');
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, idx: number) => {
-    if (e.key === "Backspace" && !otp[idx] && idx > 0) {
-      const newOtp = [...otp];
-      newOtp[idx - 1] = "";
-      setOtp(newOtp);
-      inputsRef.current[idx - 1]?.focus();
+    if (e.key === "Backspace") {
+      if (otp[idx]) {
+        // If current box has a value, clear it
+        const newOtp = [...otp];
+        newOtp[idx] = "";
+        setOtp(newOtp);
+      } else if (idx > 0) {
+        // If current box is empty, move focus to previous
+        const prevInput = document.getElementById(`otp-${idx - 1}`);
+        if (prevInput) (prevInput as HTMLInputElement).focus();
+
+        // Also clear the previous box
+        const newOtp = [...otp];
+        newOtp[idx - 1] = "";
+        setOtp(newOtp);
+      }
+      // Prevent default to avoid browser navigation
+      e.preventDefault();
     }
   };
+
+  // Mask the phone number for display
+  const maskPhone = (num: string) =>
+    num.replace(/^(\d{2})\d{6}(\d{2})$/, "$1******$2");
 
   return (
     <div className="otp-container">
       <div className="otp-content">
-        <div className="back-arrow" onClick={() => navigate(-1)}>←</div>
-
+        <div className="back-arrow" onClick={() => navigate(-1)}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M15 6L9 12L15 18" stroke="#045af3" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
         <h2>OTP Verification</h2>
         <p className="description">
-          Enter the verification code we just sent to your number +91 7******55.
+          Enter the verification code we just sent to your number +91 {maskPhone(phone)}.
         </p>
 
         <div className="otp-inputs">
-          {otp.map((digit, idx) => (
+          {otp.map((digit, index) => (
             <input
-              key={idx}
+              key={index}
+              id={`otp-${index}`}
               type="text"
+              autoComplete="off"
+              inputMode="numeric"
+              pattern="[0-9]*"
               maxLength={1}
               value={digit}
-              ref={el => inputsRef.current[idx] = el}
-              onChange={e => handleChange(e.target.value, idx)}
-              onKeyDown={e => handleKeyDown(e, idx)}
+              onChange={(e) => handleChange(index, e.target.value)}
+              onKeyDown={e => handleKeyDown(e, index)}
             />
           ))}
         </div>
 
-        <p className="resend-text">Didn’t receive code? <span>Resend</span></p>
+        <p className="resend-text">
+          Didn't receive code? <span>Resend</span>
+        </p>
 
-        <div className="logo">
-          
+        <div className="logo-bg">
           <img src="/Bglogo.png" alt="Logo" />
         </div>
 
-        <button className="verify-btn" onClick={handleVerify}>Verify</button>
+        <button className="verify-btn" onClick={handleVerify}>
+          Verify
+        </button>
       </div>
     </div>
   );
 };
 
 export default OtpVerification;
+
+
+

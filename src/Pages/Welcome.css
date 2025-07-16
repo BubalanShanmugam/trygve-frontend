@@ -29,9 +29,9 @@
 
 .logo-b {
   position: absolute;
-  top: 50px;
+  top: 210px;
   bottom: 130px;
-  left: -20%;
+  left: 35%;
   transform: translateX(-50%);
   transform: scale(1.5);
   z-index: -1;

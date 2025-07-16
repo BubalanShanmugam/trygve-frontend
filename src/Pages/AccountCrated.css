@@ -1,0 +1,62 @@
+.account-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: white;
+}
+
+.account-content {
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+  position: relative;
+}
+
+.back-arrow {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.logo-success {
+  font-size: 3rem;
+  color: #0146ff;
+  margin-top: 60px;
+}
+
+h2 {
+  font-family: 'Audiowide', cursive;
+  color: #0146ff;
+  font-size: 1.3rem;
+  margin: 20px 0 10px;
+}
+
+.description {
+  font-size: 0.9rem;
+  color: gray;
+  padding: 0 15px;
+  margin-bottom: 30px;
+}
+
+.account-container .bglogo img {
+  width: 40vw;
+  bottom: 130px;
+  max-width: 220px;
+  min-width: 120px;
+  opacity: 0.1;
+  transition: width 0.3s;
+}
+
+.login-btn {
+  background-color: #0146ff;
+  color: white;
+  font-size: 1rem;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}

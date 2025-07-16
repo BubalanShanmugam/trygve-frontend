@@ -1,114 +1,3 @@
-/* .signup-container {
-  height: 90vh;
-  padding: 30px 24px;
-  font-family: 'Segoe UI', sans-serif;
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  margin: 0 500px;
-}
-
-.back-arrow {
-  margin-left: -450px;
-  font-size: 24px;
-  margin-bottom: 16px;
-  cursor: pointer;
-}
-
-h2 {
-  font-family: 'Audiowide', cursive;
-  font-size: 1.5rem;
-  color: #045af3;
-  margin-left: -100px;
-  margin-bottom: 10px;
-}
-
-.description {
-  font-size: 0.9rem;
-  color: #666;
-  align-self:flex-start;
-  margin-bottom: 30px;
-}
-
-.input-group {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  margin-bottom: 30px;
-}
-
-.country-code {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 13px 12px;
-  border: 2px solid #045af3;
-  border-radius: 8px;
-}
-
-.country-code img {
-  width: 20px;
-}
-
-input[type="text"] {
-  flex: 1;
-  padding: 10px 14px;
-  font-size: 1rem;
-  border: 2px solid #045af3;
-  border-radius: 8px;
-  outline: none;
-}
-
-/* .logo-bg {
-  position: absolute;
-  bottom: 130px;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0.07;
-  z-index: -1;
-}
-
-.logo-bg img {
-  position: absolute;
-  top: 200px;
-  bottom: 130px;
-  transform: translateX(-50%);
-  transform: scale(1.6);
-  z-index: -1;
-  opacity: 0.3;
-}
-
-.send-code {
-  margin-top: 300px;
-  background-color: #aaa;
-  color: #fff;
-  font-size: 1rem;
-  border: none;
-  padding: 12px;
-  border-radius: 24px;
-  width: 100%;
-  cursor: pointer;  
-}
-
-.login-text {
-  text-align: center;
-  margin-top: 14px;
-  font-size: 0.9rem;
-  color: #555;
-}
-
-.login-text span {
-  color: #045af3;
-  font-weight: bold;
-  cursor: pointer;
-} */
-
-
-
-
-
 
 
 
@@ -120,22 +9,23 @@ input[type="text"] {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 70vh;
+  min-height: 100vh;
   padding: 20px;
   background-color: white;
+  position: relative;
 }
 
 .signup-content {
   width: 100%;
   max-width: 420px;
-  text-align: beggining;
+  text-align: start;
   position: relative;
 }
 
 .back-arrow {
   position: absolute;
   top: 10px;
-  left: 10px;
+  left: 2px;
   font-size: 1.5rem;
   cursor: pointer;
 }
@@ -145,7 +35,7 @@ h2 {
   color: #0146ff;
   font-size: 1.5rem;
   margin-top: 50px;
-  margin-left: 10PX;
+  margin-left: 10px;
 }
 
 .description {
@@ -159,7 +49,7 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 5px;
   margin-bottom: 20px;
   flex-wrap: wrap;
 }
@@ -167,7 +57,8 @@ h2 {
 .country-code {
   border: 2px solid #0146ff;
   border-radius: 8px;
-  padding: 8px 12px;
+  padding: 10px 10px;
+  margin-left: 8px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -188,24 +79,23 @@ h2 {
 }
 
 .logo-bg {
-  text-align: center;
-  margin-TOP: 150px;
-  transform: scale(7);
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
 }
 
-/* .logo-bg img {
-  width: 120px;
+.logo-bg img {
+  width: 40vw;
+  max-width: 200px;
+  min-width: 120px;
   opacity: 0.1;
-} */
+  transition: width 0.3s;
+}
 
 .send-code {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
+  margin: 10px auto;
   background-color: #0146ff;
-  position:relative;
-  
   color: white;
   font-size: 1rem;
   padding: 12px 24px;
@@ -217,56 +107,14 @@ h2 {
 
 .login-text {
   text-align: center;
-  margin-top: 60px;
+  margin-top: 30px;
   font-size: 0.9rem;
-  font-family: 'Poppins', sans-serif;
-  /* font-weight: 100; */
   opacity: 0.6;
 }
 
 .login-text span {
-  display: inline-block;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
   color: #0146ff;
   cursor: pointer;
   font-weight: bold;
   text-decoration: underline;
-}
-
-.signup-bg img {
-  width: 40vw;
-  max-width: 320px;
-  min-width: 120px;
-  opacity: 0.1;
-  transition: width 0.3s;
-}
-
-.otp-bg img {
-  width: 120px;
-  opacity: 0.1;
-  margin: 20px 0;
-}
-
-.otp-inputs {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.otp-inputs input {
-  width: 40px;
-  height: 40px;
-  margin: 0 5px;
-  text-align: center;
-  font-size: 1.5rem;
-  border: 2px solid #0146ff;
-  border-radius: 8px;
-  outline: none;
-  transition: border-color 0.3s;
-}
-
-.otp-inputs input:focus {
-  border-color: #045af3;
 }

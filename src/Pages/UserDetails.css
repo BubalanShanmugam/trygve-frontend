@@ -1,24 +1,22 @@
-.otp-container {
+.user-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   padding: 20px;
   background-color: white;
-  position: relative;
 }
 
-.otp-content {
+.user-content {
   width: 100%;
   max-width: 420px;
-  text-align: start;
   position: relative;
 }
 
 .back-arrow {
   position: absolute;
   top: 10px;
-  left: 2px;
+  left: 10px;
   font-size: 1.5rem;
   cursor: pointer;
 }
@@ -34,55 +32,57 @@ h2 {
 .description {
   font-size: 0.9rem;
   color: gray;
-  margin: 10px 0 30px;
-  padding: 0 10px;
-}
-
-.otp-inputs {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
+  padding: 10px 15px;
   margin-bottom: 20px;
 }
 
-.otp-inputs input {
-  width: 45px;
-  height: 50px;
-  font-size: 1.5rem;
-  text-align: center;
+.user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 0 10px;
+}
+
+.user-form input {
+  padding: 12px;
   border: 2px solid #0146ff;
   border-radius: 8px;
+  font-size: 1rem;
 }
 
-.resend-text {
-  font-size: 0.9rem;
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.resend-text span {
-  color: #0146ff;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.logo-bg {
+.location-input {
   display: flex;
-  justify-content: center;
-  margin: 40px 0;
+  align-items: center;
+  border: 2px solid #0146ff;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.logo-bg img {
+.location-input input {
+  flex: 1;
+  border: none;
+  padding: 12px;
+  font-size: 1rem;
+}
+
+.location-icon {
+  padding: 0 12px;
+  font-size: 1.2rem;
+  background-color: #f0f0f0;
+  border-left: 2px solid #0146ff;
+}
+
+
+.user-container .log img {
   width: 40vw;
-  max-width: 200px;
+  max-width: 220px;
   min-width: 120px;
   opacity: 0.1;
   transition: width 0.3s;
 }
 
-.verify-btn {
-  display: block;
-  margin: 10px auto;
+
+.create-btn {
   background-color: #0146ff;
   color: white;
   font-size: 1rem;
@@ -90,5 +90,7 @@ h2 {
   border: none;
   border-radius: 50px;
   cursor: pointer;
+  display: block;
+  margin: auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
