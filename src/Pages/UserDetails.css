@@ -103,19 +103,54 @@ h2 {
 
 
 
-
-
 .user-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 90vh;
+  min-height: 80vh;
+  background-color: white;
+  position: relative;
+  padding: 0 20px;
+  overflow: hidden;
+}
+
+/* ::before for background image with opacity */
+.user-container::before {
+  content: "";
+  position: absolute;
+  top: 220px; /* Move image down by 20px */
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/Bglogo.png');
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: 160px;
+  opacity: 0.2; /* Change this value for desired opacity */
+  z-index: 0;
+  pointer-events: none;
+}
+
+.user-content {
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  z-index: 1; /* Ensure content appears above background */
+}
+
+
+/* .user-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
   background-color: white;
   background-image: url('/Bglogo.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 160px;
-  /*background-position: center bottom;*/
+  ;
+  /*background-position: center bottom;
   position: relative;
   padding: 0 20px;
   overflow: hidden;
@@ -123,31 +158,34 @@ h2 {
 
 .user-content {
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
   position: relative;
-}
+} */
 
 .back-arrow {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  /* top: 10px;
+  left: 10px; */
+  margin-left: -15px;
   font-size: 1.5rem;
   cursor: pointer;
   z-index: 2;
 }
 
-h2 {
+.hh {
   font-family: 'Audiowide', cursive;
   color: #0146ff;
   font-size: 1.5rem;
   margin-top: 60px;
   margin-bottom: 10px;
+  margin-left: 3px;
 }
 
 .description {
   font-size: 0.9rem;
   color: gray;
   margin-bottom: 30px;
+  margin-left: -5px;
 }
 
 .user-form {
@@ -156,6 +194,7 @@ h2 {
   gap: 20px;
   position: relative;
   background: none;
+  margin-bottom: 30px;
   z-index: 1; /* Ensures form appears above background */
 }
 
@@ -177,7 +216,7 @@ h2 {
   border-radius: 10px;
   background: none;
   overflow: hidden;
-  background-color: white;
+  /* background-color: white; */
 }
 
 .location-input input {
