@@ -17,7 +17,7 @@ const AccountCreated = () => {
 
         <h2>You’re Now with Your Trusted Guardian of Life!</h2>
         <p className="description">
-          Welcome to the TRYGVƎ Family!<br />
+          Welcome to the TRYGVE Family!<br />
           Your journey to better health starts here.
         </p>
 
@@ -25,7 +25,7 @@ const AccountCreated = () => {
           <img src="/Bglogo.png" alt="Logo" />
         </div>
 
-        <button className="login-btn" onClick={() => navigate('/login')}>
+        <button className="login-btn" onClick={() => navigate('/welcome')}>
           Back to Login
         </button>
       </div>

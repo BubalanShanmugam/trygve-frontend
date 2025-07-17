@@ -1,8 +1,8 @@
-.user-container {
+/* .user-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 50vh;
   padding: 20px;
   background-color: white;
 }
@@ -10,6 +10,7 @@
 .user-content {
   width: 100%;
   max-width: 420px;
+  margin-top: 100px;
   position: relative;
 }
 
@@ -19,6 +20,7 @@
   left: 10px;
   font-size: 1.5rem;
   cursor: pointer;
+  margin-bottom: 90px;
 }
 
 h2 {
@@ -39,6 +41,7 @@ h2 {
 .user-form {
   display: flex;
   flex-direction: column;
+ 
   gap: 15px;
   padding: 0 10px;
 }
@@ -46,6 +49,7 @@ h2 {
 .user-form input {
   padding: 12px;
   border: 2px solid #0146ff;
+  margin-top: 10px;
   border-radius: 8px;
   font-size: 1rem;
 }
@@ -68,16 +72,15 @@ h2 {
 .location-icon {
   padding: 0 12px;
   font-size: 1.2rem;
-  background-color: #f0f0f0;
-  border-left: 2px solid #0146ff;
 }
-
 
 .user-container .log img {
   width: 40vw;
-  max-width: 220px;
+  margin-top: -400px;
+  margin-left: 140px;
+  max-width: 140px;
   min-width: 120px;
-  opacity: 0.1;
+  opacity: 0.15;
   transition: width 0.3s;
 }
 
@@ -91,6 +94,117 @@ h2 {
   border-radius: 50px;
   cursor: pointer;
   display: block;
-  margin: auto;
+  margin: 30px 0px 0px 135px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+} */
+
+
+
+
+
+
+
+
+.user-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  background-color: white;
+  background-image: url('/Bglogo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 160px;
+  /*background-position: center bottom;*/
+  position: relative;
+  padding: 0 20px;
+  overflow: hidden;
+}
+
+.user-content {
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+}
+
+.back-arrow {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 2;
+}
+
+h2 {
+  font-family: 'Audiowide', cursive;
+  color: #0146ff;
+  font-size: 1.5rem;
+  margin-top: 60px;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 0.9rem;
+  color: gray;
+  margin-bottom: 30px;
+}
+
+.user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  background: none;
+  z-index: 1; /* Ensures form appears above background */
+}
+
+.user-form input {
+  padding: 12px;
+  border: 2px solid #0146ff;
+  border-radius: 10px;
+  font-size: 1rem;
+  z-index: 0;
+  background: none;
+  /* background-color: white; */
+  position: relative;
+}
+
+.location-input {
+  display: flex;
+  align-items: center;
+  border: 2px solid #0146ff;
+  border-radius: 10px;
+  background: none;
+  overflow: hidden;
+  background-color: white;
+}
+
+.location-input input {
+  flex: 1;
+  border: none;
+  padding: 12px;
+  font-size: 1rem;
+  outline: none;
+  background: none;
+}
+
+.location-icon {
+  padding: 0 12px;
+  font-size: 1.2rem;
+  color: #0146ff;
+  background: none;
+}
+
+.create-btn {
+  background-color: #0146ff;
+  color: white;
+  font-size: 1rem;
+  padding: 12px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-top: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  width: 100%;
 }

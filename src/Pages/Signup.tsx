@@ -121,7 +121,7 @@ const Signup = () => {
     <path d="M15 6L9 12L15 18" stroke="#045af3" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 </div>
-        <h2>Can you input your number?</h2>
+        <h2 className='hh'>Can you input your number?</h2>
         <p className="description">
           You will be sent a code on this number to verify if you are the owner of the number.
         </p>

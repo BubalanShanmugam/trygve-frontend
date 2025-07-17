@@ -10,8 +10,7 @@
 
 .otp-content {
   width: 100%;
-  max-width: 420px;
-  text-align: start;
+  max-width: 400px;
   position: relative;
 }
 
@@ -23,12 +22,12 @@
   cursor: pointer;
 }
 
-h2 {
+.hh {
   font-family: 'Audiowide', cursive;
   color: #0146ff;
   font-size: 1.5rem;
-  margin-top: 50px;
-  margin-left: 10px;
+  /* margin-top: 50px; */
+  margin-left: 16px;
 }
 
 .description {

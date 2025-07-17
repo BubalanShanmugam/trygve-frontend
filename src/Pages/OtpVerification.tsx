@@ -66,7 +66,7 @@ const OtpVerification = () => {
             <path d="M15 6L9 12L15 18" stroke="#045af3" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </div>
-        <h2>OTP Verification</h2>
+        <h2 className='hh'>OTP Verification</h2>
         <p className="description">
           Enter the verification code we just sent to your number +91 {maskPhone(phone)}.
         </p>
