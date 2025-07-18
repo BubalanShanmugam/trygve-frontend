@@ -80,7 +80,7 @@ h2 {
 .account-container::before {
   content: '';
   position: absolute;
-  top: 49%;
+  top: 47%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-image: url('/Bglogo.png');
@@ -94,7 +94,7 @@ h2 {
 
 .account-content {
   width: 100%;
-  max-width: 450px;
+  max-width: 400px;
   text-align: center;
   position: relative;
   z-index: 2; /* on top of the background */
@@ -109,7 +109,7 @@ h2 {
 }
 
 .logo-success {
-  margin-top: 60px;
+  margin-top: 57px;
   margin-bottom: 20px;
 }
 

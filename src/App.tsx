@@ -56,6 +56,9 @@ import Signup from './Pages/Signup';
 import OtpVerification from './Pages/OtpVerification';
 import AccountCreated from './Pages/AccountCreated';
 import UserDetails from './Pages/UserDetails';
+import Otpforlogin from './Pages/Otpforlogin';
+import WelcomeBack from './Pages/WelcomeBack';
+
 
 const App = () => {
   return (
@@ -67,7 +70,8 @@ const App = () => {
       <Route path="/OtpVerification" element={<OtpVerification />} />
       <Route path="/UserDetails" element={<UserDetails />} />
       <Route path="/AccountCreated" element={<AccountCreated />} />
-
+      <Route path="/Otpforlogin" element={<Otpforlogin />} />
+      <Route path="/WelcomeBack" element={<WelcomeBack />} />
     </Routes>
   );
 };
