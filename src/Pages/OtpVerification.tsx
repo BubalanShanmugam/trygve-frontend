@@ -59,6 +59,7 @@ const OtpVerification = () => {
     num.replace(/^(\d{2})\d{6}(\d{2})$/, "$1******$2");
 
   return (
+    
     <div className="otp-container">
       <div className="otp-content">
         <div className="back-arrow" onClick={() => navigate(-1)}>
@@ -70,7 +71,7 @@ const OtpVerification = () => {
         <p className="description">
           Enter the verification code we just sent to your number +91 {maskPhone(phone)}.
         </p>
-
+        <div id="recaptcha-container"></div>
         <div className="otp-inputs">
           {otp.map((digit, index) => (
             <input

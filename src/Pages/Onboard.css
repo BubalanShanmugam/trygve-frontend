@@ -1,9 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+
 .onboarding-container {
   height: 100vh;
   width: 100%;
+  top:0;
+  left: 0;
   overflow: hidden;
-  position: relative;
+  position: fixed;
+  background-attachment: fixed;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif,Audiowide;
 }
 

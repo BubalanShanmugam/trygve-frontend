@@ -58,10 +58,12 @@ import AccountCreated from './Pages/AccountCreated';
 import UserDetails from './Pages/UserDetails';
 import Otpforlogin from './Pages/Otpforlogin';
 import WelcomeBack from './Pages/WelcomeBack';
+import { AuthProvider } from './Context/AuthContext';
 
 
 const App = () => {
   return (
+    <AuthProvider>
     <Routes>
       <Route path="/" element={<Onboarding />} />
       <Route path="/welcome" element={<Welcome />} />
@@ -73,6 +75,7 @@ const App = () => {
       <Route path="/Otpforlogin" element={<Otpforlogin />} />
       <Route path="/WelcomeBack" element={<WelcomeBack />} />
     </Routes>
+    </AuthProvider>
   );
 };
 
