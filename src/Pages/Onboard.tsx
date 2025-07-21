@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './Onboard.css';
 import { useNavigate } from 'react-router-dom'; // ✅
 

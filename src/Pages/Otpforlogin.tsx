@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import type { KeyboardEvent } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../Context/AuthContext';
+import { verifyOtp } from '../firebase/Auth';
 import './Otpforlogin.css';
 
 const Otpforlogin = () => {
   const navigate = useNavigate();
-  const [otp, setOtp] = useState(['', '', '', '']);
+  const location = useLocation();
+  const { setPhoneNumber, setIsLoggedIn } = useAuth();
+  
+  // Get phone from navigation state, fallback to empty string if not present
+  const phone = location.state?.phone || "";
+  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (index: number, value: string) => {
     if (/^[0-9]?$/.test(value)) {
@@ -19,15 +28,32 @@ const Otpforlogin = () => {
     }
   };
 
-  const handleVerify = () => {
-    if (otp.join('').length === 4) {
+  const handleVerify = async () => {
+    if (otp.join('').length !== 6) {
+      alert('Enter the full 6-digit OTP');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      // Verify OTP using Firebase
+      await verifyOtp(otp.join(''));
+      
+      // Store phone number and set logged in status
+      setPhoneNumber(phone);
+      setIsLoggedIn(true);
+      
+      // Navigate to welcome back page
       navigate('/WelcomeBack');
-    } else {
-      alert('Enter the full 4-digit OTP');
+    } catch (error) {
+      console.error('Error verifying OTP:', error);
+      alert('Invalid OTP. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, idx: number) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, idx: number) => {
     if (e.key === "Backspace") {
       if (otp[idx]) {
         const newOtp = [...otp];
@@ -44,6 +70,13 @@ const Otpforlogin = () => {
     }
   };
 
+  // Mask the phone number for display
+  const maskPhone = (num: string) => {
+    // Remove +91 prefix if present
+    const cleanNum = num.replace(/^\+91/, '');
+    return cleanNum.replace(/^(\d{2})\d{6}(\d{2})$/, "$1******$2");
+  };
+
   return (
     <div className="otp-wrapper">
       <div className="otp-box">
@@ -54,10 +87,11 @@ const Otpforlogin = () => {
 
         </div>
 
-        <h2 className="otp-heading">Verification Code</h2>
+        <h2 className="otp-heading">OTP Verification</h2>
         <p className="otp-subtext">
-          We have sent the verification code to your email address.
+          Enter the verification code we just sent to your number +91 {phone ? maskPhone(phone) : '****'}.
         </p>
+        <div id="recaptcha-container"></div>
 
         <div className="otp-input-container">
           {otp.map((digit, index) => (
@@ -78,8 +112,12 @@ const Otpforlogin = () => {
         </div>
 
 
-        <button className="otp-continue" onClick={handleVerify}>
-          Continue
+        <button 
+          className="otp-continue" 
+          onClick={handleVerify}
+          disabled={loading || otp.join('').length !== 6}
+        >
+          {loading ? 'Verifying...' : 'Continue'}
         </button>
       </div>
     </div>

@@ -1,15 +1,15 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import type { ReactNode } from "react";
-import type { User } from "firebase/auth";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebase/firebaseConfig";
 
 // Define the shape of the context value
 interface AuthContextType {
-  user: User | null;
+  phoneNumber: string | null;
+  isLoggedIn: boolean;
   otpSent: boolean;
-  setUser: (user: User | null) => void;
+  setPhoneNumber: (phone: string | null) => void;
+  setIsLoggedIn: (status: boolean) => void;
   setOtpSent: (status: boolean) => void;
+  validateLogin: (enteredPhone: string) => boolean;
 }
 
 // Create the context
@@ -24,19 +24,58 @@ export const useAuth = () => {
 
 // Provider component to wrap your app
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [phoneNumber, setPhoneNumber] = useState<string | null>(
+    localStorage.getItem('userPhone')
+  );
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
+    localStorage.getItem('isLoggedIn') === 'true'
+  );
   const [otpSent, setOtpSent] = useState(false);
 
-  // Listen for Firebase auth state changes
+  // Store phone number in localStorage when it changes
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      setUser(firebaseUser);
-    });
-    return () => unsubscribe();
-  }, []);
+    if (phoneNumber) {
+      localStorage.setItem('userPhone', phoneNumber);
+    } else {
+      localStorage.removeItem('userPhone');
+    }
+  }, [phoneNumber]);
+
+  // Store login state in localStorage when it changes
+  useEffect(() => {
+    localStorage.setItem('isLoggedIn', isLoggedIn.toString());
+  }, [isLoggedIn]);
+
+  // Function to validate login with stored phone number
+  const validateLogin = (enteredPhone: string): boolean => {
+    const storedPhone = localStorage.getItem('userPhone');
+    if (!storedPhone) return false;
+    
+    // Clean both phone numbers for comparison (remove spaces, dashes, etc.)
+    let cleanStoredPhone = storedPhone.replace(/\D/g, '');
+    const cleanEnteredPhone = enteredPhone.replace(/\D/g, '');
+    
+    // Remove country code (91) from stored phone if present
+    if (cleanStoredPhone.startsWith('91') && cleanStoredPhone.length === 12) {
+      cleanStoredPhone = cleanStoredPhone.substring(2);
+    }
+    
+    // Compare only the 10-digit numbers
+    return cleanStoredPhone === cleanEnteredPhone;
+  };
 
   return (
-    <AuthContext.Provider value={{ user, otpSent, setUser, setOtpSent }}>
+    <AuthContext.Provider 
+      value={{ 
+        phoneNumber, 
+        isLoggedIn, 
+        otpSent, 
+        setPhoneNumber, 
+        setIsLoggedIn, 
+        setOtpSent,
+        validateLogin 
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

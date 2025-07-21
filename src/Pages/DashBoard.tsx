@@ -4,11 +4,12 @@ import './DashBoard.css';
 
 const DashBoard = () => {
   const navigate = useNavigate();
-  const { user, setUser } = useAuth();
+  const { phoneNumber, isLoggedIn, setPhoneNumber, setIsLoggedIn } = useAuth();
 
   const handleLogout = () => {
-    // Clear user from context
-    setUser(null);
+    // Clear user data from context
+    setPhoneNumber(null);
+    setIsLoggedIn(false);
     
     // Clear any stored data
     localStorage.clear();
@@ -38,12 +39,12 @@ const DashBoard = () => {
       <div className="dashboard-content">
         <div className="user-info-card">
           <h2>Your Profile</h2>
-          {user ? (
+          {isLoggedIn && phoneNumber ? (
             <div className="user-details">
-              <p><strong>Phone:</strong> {user.phoneNumber || 'Not available'}</p>
-              <p><strong>User ID:</strong> {user.uid}</p>
-              <p><strong>Last Sign In:</strong> {user.metadata?.lastSignInTime || 'Not available'}</p>
-              <p><strong>Account Created:</strong> {user.metadata?.creationTime || 'Not available'}</p>
+              <p><strong>Phone:</strong> {phoneNumber}</p>
+              <p><strong>Status:</strong> Verified User</p>
+              <p><strong>Account Type:</strong> Standard</p>
+              <p><strong>Login Status:</strong> Active</p>
             </div>
           ) : (
             <p>No user information available</p>

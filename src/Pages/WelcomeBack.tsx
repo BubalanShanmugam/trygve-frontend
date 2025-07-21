@@ -1,12 +1,11 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './WelcomeBack.css';
 
-const WelcomeBack: React.FC = () => {
+const WelcomeBack = () => {
   const navigate = useNavigate();
 
   const handleContinue = () => {
-    navigate('/dashboard'); // Change this route as per your app
+    navigate('/DashBoard'); // Updated to match your actual route
   };
 
   return (
@@ -35,5 +34,4 @@ const WelcomeBack: React.FC = () => {
     </div>
   );
 };
-
 export default WelcomeBack;

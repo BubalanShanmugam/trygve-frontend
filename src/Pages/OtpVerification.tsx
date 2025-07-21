@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { verifyOtp } from '../firebase/Auth';
 import { useAuth } from '../Context/AuthContext';
@@ -7,7 +7,7 @@ import './OtpVerification.css';
 const OtpVerification = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setUser } = useAuth();
+  const { setPhoneNumber, setIsLoggedIn } = useAuth();
   
   // Get phone from navigation state, fallback to empty string if not present
   const phone = location.state?.phone || "";
@@ -36,10 +36,11 @@ const OtpVerification = () => {
     setLoading(true);
     try {
       // Verify OTP using Firebase
-      const result = await verifyOtp(otp.join(''));
+      await verifyOtp(otp.join(''));
       
-      // Set user in context
-      setUser(result.user);
+      // Store phone number and set logged in status
+      setPhoneNumber(phone);
+      setIsLoggedIn(true);
       
       // Navigate to user details page
       navigate('/UserDetails', { state: { phone, otp: otp.join('') } });
@@ -132,6 +133,3 @@ const OtpVerification = () => {
 };
 
 export default OtpVerification;
-
-
-

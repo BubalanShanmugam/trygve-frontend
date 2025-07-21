@@ -1,6 +1,6 @@
 // import React from 'react';
 // import { useNavigate } from 'react-router-dom';
-// import './Login.css';
+// import '../styles/Login.css';
 
 // const Login = () => {
 //   const navigate = useNavigate();
@@ -38,31 +38,68 @@
 
 
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../Context/AuthContext';
+import { sendOtp } from '../firebase/Auth';
 import './Login.css';
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
+  const { validateLogin, setOtpSent } = useAuth();
   const [phone, setPhone] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleContinue = () => {
-    if (!email || !phone) {
-      alert('Please fill in both fields.');
+  const formatPhoneNumber = (value: string) => {
+    // Remove all non-numeric characters
+    const cleanValue = value.replace(/\D/g, '');
+    // Format as "12345 67890"
+    if (cleanValue.length <= 5) {
+      return cleanValue;
+    }
+    return `${cleanValue.slice(0, 5)} ${cleanValue.slice(5, 10)}`;
+  };
+
+  const handleContinue = async () => {
+    setError('');
+    
+    if (!phone) {
+      setError('Please enter your phone number.');
       return;
     }
-    // Simple email format check
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      alert('Please enter a valid email address.');
+
+    // Clean phone number for validation
+    const cleanPhone = phone.replace(/\D/g, '');
+    
+    if (cleanPhone.length !== 10) {
+      setError('Please enter a valid 10-digit phone number.');
       return;
     }
-    if (phone.length !== 10) {
-      alert('Please enter a valid 10-digit phone number.');
-      return;
-    }else{
-    navigate('/Otpforlogin');
+
+    // Validate against stored phone number
+    if (validateLogin(cleanPhone)) {
+      setLoading(true);
+      try {
+        // Format phone number for Firebase (E.164 format)
+        const formattedPhone = `+91${cleanPhone}`;
+        
+        // Send OTP using Firebase
+        await sendOtp(formattedPhone);
+        
+        // Set OTP sent status
+        setOtpSent(true);
+        
+        // Navigate to OTP verification with phone number
+        navigate('/Otpforlogin', { state: { phone: formattedPhone } });
+      } catch (error) {
+        console.error('Error sending OTP:', error);
+        setError('Failed to send OTP. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      setError('Phone number not found. Please sign up first or check your number.');
     }
   };
 
@@ -79,56 +116,33 @@ const Login = () => {
           <img src="/Image.png" alt="Illustration" />
         </div>
 
-        <h2 className="title">OTP Verification</h2>
-        <p className="description">Enter email and phone number to send one time Password</p>
+        <h2 className="title">Login Verification</h2>
+        <p className="description">Enter your phone number to verify your account</p>
 
-        <div className="form-group">
-  <label htmlFor="email">Email Id</label>
-  <div className="input-wrapper">
-    <input
-      id="email"
-      type="email"
-      placeholder="dscode@gmail.com"
-      value={email}
-      onChange={(e) => setEmail(e.target.value)}
-    />
-    <span className="edit-icon">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        height="20"
-        viewBox="0 0 24 24"
-        width="20"
-        fill="#888"
-      >
-        <path d="M0 0h24v24H0V0z" fill="none" />
-        <path d="M3 17.25V21h3.75l11.02-11.02-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 
-        0-1.41l-2.34-2.34a.9959.9959 0 
-        00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
-      </svg>
-    </span>
-  </div>
-</div>
-
+        {error && <div className="error-message">{error}</div>}
+        
+        <div id="recaptcha-container"></div>
 
         <div className="form-group">
           <label>Phone Number</label>
           <input
             type="tel"
-            placeholder="+91 0123456789"
+            placeholder="12345 67890"
             value={phone}
             required
-            maxLength={10}
-            pattern="[0-9]{10}"
             onChange={(e) => {
-              // Only allow numbers, max 10 digits
-              const value = e.target.value.replace(/\D/g, "").slice(0, 10);
-              setPhone(value);
+              const formatted = formatPhoneNumber(e.target.value);
+              setPhone(formatted);
             }}
           />
         </div>
 
-        <button className="continue-btn" onClick={handleContinue}>
-          Continue
+        <button 
+          className="continue-btn" 
+          onClick={handleContinue}
+          disabled={loading}
+        >
+          {loading ? 'Sending OTP...' : 'Continue'}
         </button>
       </div>
     </div>
