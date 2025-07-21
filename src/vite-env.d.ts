@@ -1,10 +1,9 @@
 /// <reference types="vite/client" />
-import { RecaptchaVerifier } from "firebase/auth";
+import type { RecaptchaVerifier, ConfirmationResult } from "firebase/auth";
 
 declare global {
   interface Window {
-    recaptchaVerifier?: RecaptchaVerifier & {
-      clear(): void;
-    };
+    recaptchaVerifier?: RecaptchaVerifier;
+    confirmationResult?: ConfirmationResult;
   }
 }

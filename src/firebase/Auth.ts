@@ -96,8 +96,11 @@
 
 
 import { auth } from "./firebaseConfig";
-import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-import type { ConfirmationResult } from "firebase/auth";
+import { 
+  RecaptchaVerifier, 
+  signInWithPhoneNumber,
+  type ConfirmationResult 
+} from "firebase/auth";
 
 // Extend window for recaptchaVerifier and confirmationResult
 declare global {
@@ -111,13 +114,22 @@ declare global {
  * Sets up invisible reCAPTCHA for phone authentication.
  * @param containerId - The DOM id for the reCAPTCHA container.
  */
-export const setupRecaptcha = (containerId: string = "recaptcha-container") => {
+export const setupRecaptcha = (containerId: string = "recaptcha-container"): RecaptchaVerifier => {
   if (!window.recaptchaVerifier) {
-    window.recaptchaVerifier = new RecaptchaVerifier(
-      containerId,
-      { size: "invisible" },
-      auth
-    );
+    try {
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, containerId, {
+        size: "invisible",
+        callback: () => {
+          console.log("reCAPTCHA solved");
+        },
+        'expired-callback': () => {
+          console.log("reCAPTCHA expired");
+        }
+      });
+    } catch (error) {
+      console.error("Error setting up reCAPTCHA:", error);
+      throw error;
+    }
   }
   return window.recaptchaVerifier;
 };

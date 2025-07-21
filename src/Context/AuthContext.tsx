@@ -1,16 +1,43 @@
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { createContext, useState, useContext, useEffect } from "react";
+import type { ReactNode } from "react";
+import type { User } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase/firebaseConfig";
 
-// Use environment variables from .env
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+// Define the shape of the context value
+interface AuthContextType {
+  user: User | null;
+  otpSent: boolean;
+  setUser: (user: User | null) => void;
+  setOtpSent: (status: boolean) => void;
+}
+
+// Create the context
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+// Custom hook for consuming the context
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) throw new Error("useAuth must be used within AuthProvider");
+  return context;
 };
 
-export const firebaseApp = initializeApp(firebaseConfig);
-export const auth = getAuth(firebaseApp);
+// Provider component to wrap your app
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [otpSent, setOtpSent] = useState(false);
+
+  // Listen for Firebase auth state changes
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  return (
+    <AuthContext.Provider value={{ user, otpSent, setUser, setOtpSent }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};

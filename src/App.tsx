@@ -47,7 +47,6 @@
 
 
 // src/App.tsx
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Onboarding from './Pages/Onboard';
 import Welcome from './Pages/Welcome';
@@ -58,12 +57,10 @@ import AccountCreated from './Pages/AccountCreated';
 import UserDetails from './Pages/UserDetails';
 import Otpforlogin from './Pages/Otpforlogin';
 import WelcomeBack from './Pages/WelcomeBack';
-import { AuthProvider } from './Context/AuthContext';
-
+import DashBoard from './Pages/DashBoard';
 
 const App = () => {
   return (
-    <AuthProvider>
     <Routes>
       <Route path="/" element={<Onboarding />} />
       <Route path="/welcome" element={<Welcome />} />
@@ -74,8 +71,8 @@ const App = () => {
       <Route path="/AccountCreated" element={<AccountCreated />} />
       <Route path="/Otpforlogin" element={<Otpforlogin />} />
       <Route path="/WelcomeBack" element={<WelcomeBack />} />
+      <Route path="/DashBoard" element={<DashBoard />} />
     </Routes>
-    </AuthProvider>
   );
 };
 

@@ -98,20 +98,58 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { sendOtp } from '../firebase/Auth';
+import { useAuth } from '../Context/AuthContext';
 import './Signup.css';
 import './OtpVerification.css';
 
 const Signup = () => {
   const navigate = useNavigate();
   const [phone, setPhone] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { setOtpSent } = useAuth();
 
-  const handleSendCode = () => {
-  if (phone.length === 10) {
-    navigate('/OtpVerification', { state: { phone } });
-  } else {
-    alert("Enter a valid 10-digit number");
-  }
-};
+  // Format phone number with space (12345 67890)
+  const formatPhoneNumber = (value: string) => {
+    // Remove all non-digits
+    const cleaned = value.replace(/\D/g, '');
+    // Limit to 10 digits
+    const limited = cleaned.slice(0, 10);
+    // Add space after 5th digit
+    if (limited.length > 5) {
+      return limited.slice(0, 5) + ' ' + limited.slice(5);
+    }
+    return limited;
+  };
+
+  const handleSendCode = async () => {
+    // Remove space for validation
+    const cleanPhone = phone.replace(/\s/g, '');
+    if (cleanPhone.length !== 10) {
+      alert("Enter a valid 10-digit number");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      // Format phone number for Firebase (E.164 format)
+      const formattedPhone = `+91${cleanPhone}`;
+      
+      // Send OTP using Firebase
+      await sendOtp(formattedPhone);
+      
+      // Update context state
+      setOtpSent(true);
+      
+      // Navigate to OTP verification with phone number
+      navigate('/OtpVerification', { state: { phone: formattedPhone } });
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+      alert("Failed to send OTP. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="signup-container">
@@ -134,14 +172,14 @@ const Signup = () => {
           <input
             type="text"
             placeholder="12345 67890"
-            maxLength={10}
+            maxLength={11} // 10 digits + 1 space
             value={phone}
             inputMode="numeric"
-            pattern="[0-9]*"
+            pattern="[0-9 ]*"
             onChange={e => {
-            // Only allow numbers
-            const value = e.target.value.replace(/\D/g, "");
-            setPhone(value);
+              // Format phone number with space
+              const formatted = formatPhoneNumber(e.target.value);
+              setPhone(formatted);
             }}
           />
         </div>
@@ -151,15 +189,19 @@ const Signup = () => {
         </div>
 
         <button
-        className="send-code"
-        onClick={handleSendCode}
+          className="send-code"
+          onClick={handleSendCode}
+          disabled={loading || phone.replace(/\s/g, '').length !== 10}
         >
-        Send Code
+          {loading ? 'Sending...' : 'Send Code'}
         </button>
 
         <p className="login-text">
           Already have an account? <span onClick={() => navigate('/login')}>Log in</span>
         </p>
+
+        {/* reCAPTCHA container for Firebase phone auth */}
+        <div id="recaptcha-container"></div>
       </div>
     </div>
   );

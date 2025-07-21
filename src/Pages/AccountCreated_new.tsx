@@ -8,7 +8,7 @@ const AccountCreated = () => {
   return (
     <div className="account-container">
       <div className="account-content">
-<div className="back-arrow" onClick={() => navigate(-1)}>
+        <div className="back-arrow" onClick={() => navigate(-1)}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M15 6L9 12L15 18" stroke="#045af3" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
@@ -20,13 +20,21 @@ const AccountCreated = () => {
           </svg>
         </div>
 
-        <h2>You’re Now with Your Trusted Guardian of Life!</h2>
+        <h2>You're Now with Your Trusted Guardian of Life!</h2>
         <p className="des">
           Welcome to the TRYGVE Family!<br />
           Your journey to better health starts here.
         </p>
 
-        <button className="login-btn" onClick={() => navigate('/welcome')}>
+        <button className="login-btn" onClick={() => navigate('/DashBoard')}>
+          Go to Dashboard
+        </button>
+        
+        <button 
+          className="login-btn" 
+          onClick={() => navigate('/welcome')}
+          style={{ marginTop: '10px', backgroundColor: '#6c757d' }}
+        >
           Back to Login
         </button>
       </div>

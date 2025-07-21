@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { verifyOtp } from '../firebase/Auth';
+import { useAuth } from '../Context/AuthContext';
 import './OtpVerification.css';
 
 const OtpVerification = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { setUser } = useAuth();
+  
   // Get phone from navigation state, fallback to empty string if not present
   const phone = location.state?.phone || "";
-
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (index: number, value: string) => {
     if (/^[0-9]?$/.test(value)) {
@@ -23,12 +27,27 @@ const OtpVerification = () => {
     }
   };
 
-  const handleVerify = () => {
-    if (otp.join('').length === 6) {
-      navigate('/UserDetails', { state: { phone, otp: otp.join('') } });
-      // Navigate to the next page
-    } else {
+  const handleVerify = async () => {
+    if (otp.join('').length !== 6) {
       alert('Enter the full 6-digit OTP');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      // Verify OTP using Firebase
+      const result = await verifyOtp(otp.join(''));
+      
+      // Set user in context
+      setUser(result.user);
+      
+      // Navigate to user details page
+      navigate('/UserDetails', { state: { phone, otp: otp.join('') } });
+    } catch (error) {
+      console.error('Error verifying OTP:', error);
+      alert('Invalid OTP. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -55,8 +74,11 @@ const OtpVerification = () => {
   };
 
   // Mask the phone number for display
-  const maskPhone = (num: string) =>
-    num.replace(/^(\d{2})\d{6}(\d{2})$/, "$1******$2");
+  const maskPhone = (num: string) => {
+    // Remove +91 prefix if present
+    const cleanNum = num.replace(/^\+91/, '');
+    return cleanNum.replace(/^(\d{2})\d{6}(\d{2})$/, "$1******$2");
+  };
 
   return (
     
@@ -97,8 +119,12 @@ const OtpVerification = () => {
           <img src="/Bglogo.png" alt="Logo" />
         </div>
 
-        <button className="verify-btn" onClick={handleVerify}>
-          Verify
+        <button 
+          className="verify-btn" 
+          onClick={handleVerify}
+          disabled={loading || otp.join('').length !== 6}
+        >
+          {loading ? 'Verifying...' : 'Verify'}
         </button>
       </div>
     </div>
