@@ -1,7 +1,3 @@
-
-
-
-
 // import React from 'react';
 // import { useNavigate } from 'react-router-dom';
 // import './Signup.css';
@@ -189,7 +185,7 @@ const Signup = () => {
         </div>
 
         <button
-          className="send-code"
+          className={`send-code ${loading || phone.replace(/\s/g, '').length !== 10 ? 'disabled' : 'enabled'}`}
           onClick={handleSendCode}
           disabled={loading || phone.replace(/\s/g, '').length !== 10}
         >

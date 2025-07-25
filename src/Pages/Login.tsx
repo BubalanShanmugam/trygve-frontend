@@ -65,7 +65,7 @@ const Login = () => {
     setError('');
     
     if (!phone) {
-      setError('Please enter your phone number.');
+      alert('Please enter your phone number.');
       return;
     }
 
@@ -73,7 +73,7 @@ const Login = () => {
     const cleanPhone = phone.replace(/\D/g, '');
     
     if (cleanPhone.length !== 10) {
-      setError('Please enter a valid 10-digit phone number.');
+      alert('Please enter a valid 10-digit phone number.');
       return;
     }
 
@@ -94,12 +94,12 @@ const Login = () => {
         navigate('/Otpforlogin', { state: { phone: formattedPhone } });
       } catch (error) {
         console.error('Error sending OTP:', error);
-        setError('Failed to send OTP. Please try again.');
+        alert('Failed to send OTP. Please try again.');
       } finally {
         setLoading(false);
       }
     } else {
-      setError('Phone number not found. Please sign up first or check your number.');
+      alert('Phone number not found. Please sign up first or check your number.');
     }
   };
 

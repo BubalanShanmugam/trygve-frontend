@@ -1,0 +1,94 @@
+/* Global styles to hide scrollbars on desktop and show when needed */
+
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Hide scrollbars for desktop */
+body {
+  overflow-y: auto;
+}
+
+/* Hide scrollbar for webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Hide scrollbar for Firefox */
+html {
+  scrollbar-width: none;
+}
+
+/* Show scrollbars when resolution is small or content overflows */
+@media (max-height: 700px), (max-width: 768px) {
+  /* Show scrollbars for small screens */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+  }
+  
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: #c1c1c1 #f1f1f1;
+  }
+}
+
+/* Container base styles for all pages */
+.page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  height: 100vh;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Content wrapper for all pages */
+.page-content {
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  height: auto;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Responsive adjustments */
+@media (max-height: 700px), (max-width: 768px) {
+  .page-container {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+  
+  .page-content {
+    max-height: none;
+  }
+}

@@ -1,18 +1,37 @@
+/* Hide scrollbars for desktop, show only when needed for smaller resolutions */
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 
+/* Hide scrollbar for webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
 
-
-
-
+/* Hide scrollbar for Firefox */
+html {
+  scrollbar-width: none;
+}
 
 .signup-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  height: 100vh;
   padding: 20px;
   background-color: white;
   position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .signup-content {
@@ -20,6 +39,11 @@
   max-width: 420px;
   text-align: start;
   position: relative;
+  height: auto;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .back-arrow {
@@ -81,28 +105,66 @@
 .logo-bg {
   display: flex;
   justify-content: center;
-  margin: 40px 0;
+  margin: 20px 0;
+  flex-shrink: 0;
 }
 
 .logo-bg img {
-  width: 40vw;
-  max-width: 200px;
-  min-width: 120px;
+  width: 30vw;
+  max-width: 150px;
+  min-width: 100px;
   opacity: 0.1;
   transition: width 0.3s;
 }
 
+/* Send Code Button Styles */
 .send-code {
-  display: block;
-  margin: 10px auto;
+  width: 70%;
+  padding: 15px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+  margin-left: 70px;
+}
+
+/* Enabled Button State */
+.send-code.enabled {
   background-color: #0146ff;
   color: white;
-  font-size: 1rem;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.send-code.enabled:hover {
+  background-color: #0135cc;
+  transform: translateY(-1px);
+}
+
+/* Disabled Button State */
+.send-code.disabled {
+  background-color: #b3d9ff; /* Light blue */
+  color: #6699cc;
+  cursor: not-allowed;
+}
+
+.send-code.disabled:hover {
+  background-color: #b3d9ff; /* Same light blue on hover */
+  color: #6699cc;
+  transform: none; /* No transform effect */
+}
+
+/* Loading State */
+.send-code:disabled {
+  cursor: not-allowed;
+}
+
+.login-text {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 0.9rem;
+  opacity: 0.6;
 }
 
 .login-text {
@@ -117,4 +179,67 @@
   cursor: pointer;
   font-weight: bold;
   text-decoration: underline;
+}
+
+/* Media queries for responsive design with scrollbars when needed */
+@media (max-height: 700px) {
+  body {
+    overflow-y: auto;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+  }
+  
+  html {
+    scrollbar-width: thin;
+  }
+  
+  .signup-container {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+  
+  .signup-content {
+    max-height: none;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    overflow-y: auto;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+  }
+  
+  html {
+    scrollbar-width: thin;
+  }
+  
+  .signup-container {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
 }
